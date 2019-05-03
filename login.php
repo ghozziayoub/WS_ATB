@@ -7,7 +7,9 @@ $bd = connect();
 $email = $_GET['email']; 
 $pass = $_GET['password'];
 
-$req = "SELECT * FROM users where email='$email' AND password='$pass'";
+$passcrypt = md5($pass);
+
+$req = "SELECT * FROM users where email='$email' AND pass_account='$passcrypt'";
 
 $res = $bd->query($req);
 
