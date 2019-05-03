@@ -4,7 +4,16 @@ include "config.php";
 
 $conn = connect(); 
 
-$sql = "SELECT * FROM historique";
+$id = $_GET['id'];
+
+$sql = "SELECT type_transaction,date_transaction,montant,accounts.RIB
+FROM historique
+INNER JOIN accounts ON historique.num_compte = accounts.num_account
+WHERE num_compte IN (
+    SELECT num_account
+    FROM accounts
+    WHERE id_client = $id
+  )";
 
 $result = $conn->query($sql) or die ($conn->errorInfo()[2]);
 
@@ -19,7 +28,7 @@ if($nb>0)
         $tmp["type_transaction"] = $row["type_transaction"];
         $tmp["date_transaction"] = $row["date_transaction"];
         $tmp["montant"] = $row["montant"];
-        $tmp["num_compte"] = $row["num_compte"];
+        $tmp["RIB"] = $row["RIB"];
 
         array_push($array, $tmp);
   }

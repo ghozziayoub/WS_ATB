@@ -4,7 +4,9 @@ include "config.php";
 
 $conn = connect(); 
 
-$sql = "SELECT * FROM accounts";
+$id = $_GET['id'];
+
+$sql = "SELECT * FROM accounts where id_client = $id";
 
 $result = $conn->query($sql) or die ($conn->errorInfo()[2]);
 
